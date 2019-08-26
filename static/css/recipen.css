@@ -1,0 +1,30 @@
+[v-cloak] > * { display:none; }
+[v-cloak]::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background-image: url(/static/img/loader.svg);
+  background-size: cover;
+  left: 50%;
+  top: 50%;
+}
+
+html {
+  background-color: black;
+  color: white;
+  scroll-behavior: auto;
+  overflow-y: auto;
+}
+
+.main-content {
+  margin-left: 260px;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 1300px) {
+  .main-content {
+    margin-left: 85px;
+  }
+}

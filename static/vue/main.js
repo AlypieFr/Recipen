@@ -34,7 +34,11 @@ init = function(dark=true) {
         windowSize: {
           x: 0,
           y: 0
-        }
+        },
+        nameRules: [
+            v => !!v || 'Name is required',
+            v => (v && v.length <= 50) || 'Name must be less than 50 characters',
+        ],
     },
     methods: {
         showHideSearch() {

@@ -5,7 +5,7 @@ from flask_mongoengine import MongoEngine
 from settings import db_name, site_name, timezone, locale
 from werkzeug.exceptions import NotFound
 from flask_babel import Babel
-# from flask.ext.babel import gettext
+from flask_babel import gettext as _
 from jinja2 import ext
 from model.recipe import Recipe, Ingredient, Instruction, Category
 
@@ -32,11 +32,16 @@ def home():
     #                 categories=[{"name": "Plat principal"}, {"name": "Entrée"}],
     #                 author={"name": "Floréal", "id": "1"})
     # recipe.save()
-    return render_template("web/basis.html", title="Panel | " + site_name)
+    return render_template("web/basisnav.html", title=_("Panel") + " | " + site_name)
 
 @app.route('/panel')
 def panel_home():
-    return render_template("panel/basis.html", title="Panel | " + site_name)
+    return render_template("panel/basis.html", title=_("Panel") + " | " + site_name)
+
+
+@app.route('/register', methods=['GET'])
+def register():
+    return render_template("web/register.html", title=_("Register") + " | " + site_name)
 
 
 @app.errorhandler(NotFound)

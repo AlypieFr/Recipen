@@ -1,0 +1,35 @@
+{% extends "web/basis.html" %}
+
+{% block bodycontent %}
+{#    <div style="padding-top: 10px; height: 100%;">#}
+{#        <v-card column>#}
+{#        Main content here#}
+{#        </v-card>#}
+{#    </div>#}
+    <v-container fill-height>
+        <v-layout row wrap align-center>
+          <v-flex class="text-xs-center">
+            <v-card column max-width="500px" class="mx-auto">
+                <v-card-title>
+                    {{ _("Register") }}
+                </v-card-title>
+                <v-card-text>
+                    <v-form
+                      ref="form"
+                      v-model="valid"
+                      lazy-validation
+                    >
+                        <v-text-field
+                          v-model="name"
+                          :counter="50"
+                          :rules="nameRules"
+                          label="Name"
+                          required
+                        ></v-text-field>
+                    </v-form>
+                </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
+{% endblock %}

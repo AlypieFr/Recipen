@@ -1,7 +1,6 @@
 {% extends "basis.html" %}
 
 {% block appbody %}
-    <v-card class="overflow-hidden">
       <v-app-bar
         absolute
         color="#CA2C0A"
@@ -32,8 +31,10 @@
         id="scrolling-techniques-5"
         class="overflow-y-auto"
         max-height="100vh"
+        min-height="100%"
+        style="background: none !important;"
       >
-        <v-container style="margin-top: 40px; display: table">
+        <v-container style="padding-top: 37px; display: table; padding-left: 0;" fill-height>
 {#            <div style="width: 260px; display: table-cell; vertical-align: top; height: 100%;">#}
             <v-navigation-drawer
       :expand-on-hover="windowSize.x < 1300"
@@ -95,5 +96,4 @@
               Coucouuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu</div>
         </v-container>
       </v-sheet>
-    </v-card>
 {% endblock %}

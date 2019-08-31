@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template
+import json
+import hashlib
+from flask import Flask, render_template, request, jsonify, Response
 from flask_mongoengine import MongoEngine
 from settings import db_name, site_name, timezone, locale
 from werkzeug.exceptions import NotFound
+from mongoengine.errors import NotUniqueError
 from flask_babel import Babel
 from flask_babel import gettext as _
 from jinja2 import ext
 from model.recipe import Recipe, Ingredient, Instruction, Category
+from model.user import User
 
 
 app = Flask(__name__)
@@ -16,6 +20,14 @@ app.config['BABEL_DEFAULT_LOCALE'] = locale
 app.config['BABEL_DEFAULT_TIMEZONE'] = timezone
 babel = Babel(app)
 db = MongoEngine(app)
+
+
+@app.context_processor
+def inject_default_data():
+    return dict({
+        "locale": locale,
+        "locales": [locale],
+    })
 
 
 @app.route('/')
@@ -40,8 +52,26 @@ def panel_home():
 
 
 @app.route('/register', methods=['GET'])
-def register():
+def register_page():
     return render_template("web/register.html", title=_("Register") + " | " + site_name)
+
+
+@app.route('/register', methods=['POST'])
+def register():
+    role = "basic"
+    nb_user = User.objects().count()
+    if nb_user == 0:
+        role = "admin"
+    data = json.loads(request.data)
+    user = User(name=data["name"], email=data["email"],
+                password=hashlib.sha3_512(data["password"].encode()).hexdigest(), role=role, active=False)
+    try:
+        user.save()
+        return jsonify(success=True,
+                       message=_("User successfully created. Please check your mail to validate your account."))
+    except NotUniqueError:
+        return Response(json.dumps({"success": False,
+                                     "message": _("There is already a user with this mail address")}), status=409)
 
 
 @app.errorhandler(NotFound)

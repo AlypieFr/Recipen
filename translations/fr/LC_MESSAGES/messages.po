@@ -7,18 +7,42 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-25 15:37+0200\n"
-"PO-Revision-Date: 2019-08-25 15:37+0200\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2019-08-31 20:45+0200\n"
+"PO-Revision-Date: 2019-08-31 20:45+0200\n"
+"Last-Translator: \n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: app.py:47 app.py:51
+msgid "Panel"
+msgstr "Panel"
+
+#: app.py:56
+msgid "Register"
+msgstr "Créer un compte"
+
+#: app.py:71
+msgid ""
+"User successfully created. Please check your mail to validate your "
+"account."
+msgstr ""
+"Utilisateur créé avec succès. Veuillez vérifier vos mails afin de "
+"valider votre compte."
+
+#: app.py:74
+msgid "There is already a user with this mail address"
+msgstr "Un utilisateur existe déjà avec cette adresse e-mail"
 
 #: templates/404.html:321
 msgid "GO BACK HOME"
 msgstr "RETOURNER À LA MAISON"
 
+#: templates/web/basis.html:56
+msgid "Close"
+msgstr "Fermer"

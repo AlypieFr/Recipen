@@ -5,6 +5,14 @@
 <script src="/static/js/vue.js" defer></script>
 <script src="/static/js/vuetify-v2.0.10.min.js" defer></script>
 <script src="/static/js/jquery-3.4.1.min.js" defer></script>
+<script src="/static/js/axios.min.js" defer></script>
+<script src="/static/js/translate.js" defer></script>
+{% if locales %}
+    {% for my_locale in locales %}
+    <script src="/static/js/locale/{{ my_locale }}.js" defer></script>
+    {% endfor %}
+{% endif %}
+<script src="/static/js/session.js" defer></script>
 <script src="/static/vue/main.js" defer></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
@@ -16,15 +24,32 @@
 {% endblock %}
 
 {% block body_attr %}
-    onload="init();"
+    onload="init('{{ locale }}');"
 {% endblock %}
 
 {% block body %}
 <div id="app">
     <div v-cloak>
         <v-app :dark="dark" v-resize="onResize">
-                {% block appbody %}
-                {% endblock %}
+          {% block appbody %}
+          {% endblock %}
+          <div class="text-center">
+            <v-snackbar
+              v-model="snackbar"
+              :multi-line="snackbar_multiline"
+              :top="true"
+              :color="snackbar_color"
+            >
+              (( snackbar_message ))
+              <v-btn
+                color="black"
+                text
+                @click="snackbar = false"
+              >
+                {{ _("Close") }}
+              </v-btn>
+            </v-snackbar>
+          </div>
         </v-app>
     </div>
 </div>

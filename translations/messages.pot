@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-25 15:37+0200\n"
+"POT-Creation-Date: 2019-08-31 20:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
+#: app.py:47 app.py:51
+msgid "Panel"
+msgstr ""
+
+#: app.py:56
+msgid "Register"
+msgstr ""
+
+#: app.py:71
+msgid ""
+"User successfully created. Please check your mail to validate your "
+"account."
+msgstr ""
+
+#: app.py:74
+msgid "There is already a user with this mail address"
+msgstr ""
+
 #: templates/404.html:321
 msgid "GO BACK HOME"
+msgstr ""
+
+#: templates/web/basis.html:56
+msgid "Close"
 msgstr ""
 

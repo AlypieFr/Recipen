@@ -8,7 +8,7 @@ import subprocess
 from collections import OrderedDict
 
 
-def main(locale):
+def main(locale, clean=False):
     out = subprocess.Popen(["pcregrep", "-rh", "-o1", "tr\\(['\"]([^'\"\\,]+)['\"]\\)", "static/component",
                             "static/vue", "static/js/session.js"], stdout=subprocess.PIPE)
 
@@ -37,6 +37,16 @@ def main(locale):
                     line = "}"
                 content += line
             data = json.loads(content)
+    if clean:
+        new_data = {}
+        for item, value in data.items():
+            if "|||" in item:
+                tuple_item = tuple(item.split("|||"))
+            else:
+                tuple_item = (item, None)
+            if tuple_item in items:
+                new_data[item] = value
+        data = new_data
     for item in items:
         item_key = "|||".join(item) if item[1] is not None else item[0]
         if item_key not in data:
@@ -51,7 +61,8 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Update JS translates locale file with new translates found in code")
     parser.add_argument("-l", "--locale", help="Locale name (example: fr)", required=True)
+    parser.add_argument("-c", "--clean", help="Remove translations not used anymore", action="store_true")
 
     args = parser.parse_args()
 
-    main(args.locale)
+    main(args.locale, args.clean)

@@ -74,6 +74,18 @@ def register():
                                      "message": _("There is already a user with this mail address")}), status=409)
 
 
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if request.method == 'GET':
+        email = ""
+        after = "/"
+        if "email" in request.args and request.args.get("email") is not None:
+            email = request.args.get("email")
+        if "after" in request.args and request.args.get("after") is not None:
+            after = request.args.get("after")
+        return render_template("web/login.html", email=email, after=after, title=_("Login") + " | " + site_name)
+
+
 @app.errorhandler(NotFound)
 def error_handle_not_found(e):
     return render_template("404.html", title=site_name)

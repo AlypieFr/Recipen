@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-31 20:45+0200\n"
-"PO-Revision-Date: 2019-08-31 20:45+0200\n"
+"POT-Creation-Date: 2019-09-01 11:29+0200\n"
+"PO-Revision-Date: 2019-09-01 11:29+0200\n"
 "Last-Translator: \n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -39,10 +39,14 @@ msgstr ""
 msgid "There is already a user with this mail address"
 msgstr "Un utilisateur existe déjà avec cette adresse e-mail"
 
+#: app.py:86
+msgid "Login"
+msgstr "Connexion"
+
 #: templates/404.html:321
 msgid "GO BACK HOME"
 msgstr "RETOURNER À LA MAISON"
 
-#: templates/web/basis.html:56
+#: templates/basis.html:50
 msgid "Close"
 msgstr "Fermer"

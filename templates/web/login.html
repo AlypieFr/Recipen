@@ -2,9 +2,9 @@
 
 {% block script %}
     {{ super() }}
-    <script src="/static/vue/register.js" defer></script>
+    <script src="/static/vue/login.js" defer></script>
 {% endblock %}
 
 {% block bodycontent %}
-    <main-register></main-register>
+    <main-login email="{{ email }}"></main-login>
 {% endblock %}

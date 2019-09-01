@@ -1,4 +1,5 @@
-Vue.component("register", {
+Vue.component("main-register", {
+    extends: Basic,
     template: `
         <v-container fill-height>
         <v-layout row wrap align-center>

@@ -96,20 +96,6 @@ Vue.component("register", {
             passwordLength: v => (v && v.length >= 12 || tr('Min 12 characters')),
             passwordMatch: v => (v === this.password || tr("Passwords does not match"))
         },
-        nameRules: [
-            v => !!v || tr('Name is required'),
-            v => (v && v.length <= 50) || tr('Name must be less than 50 characters'),
-        ],
-        mailRules: [
-            v => !!v || tr('E-mail is required'),
-            v => /.+@.+\..+/.test(v) || tr("E-mail must be valid"),
-            v => (v && v.length <= 100) || tr('E-mail must be less than 50 characters'),
-        ],
-        mailConfRules: [
-            v => !!v || tr('E-mail is required'),
-            v => v === this.mail || tr("E-mails does not match"),
-            v => (v && v.length <= 100) || tr('E-mail must be less than 50 characters'),
-        ],
         valid: true,
     }},
     methods: {

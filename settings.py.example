@@ -4,3 +4,12 @@ categories = ["Entrée", "Plat principal", "Dessert", "Accompagnements", "Base",
 site_name = "Recipen"
 locale = "fr"
 timezone = "Europe/Paris"
+
+# PLEASE FILL MAIL SETTINGS TO MAKE REGISTER PAGE WORKING
+mail = {
+    "server": "",
+    "username": "",
+    "from": "",
+    "password": "",
+    "port": 587
+}

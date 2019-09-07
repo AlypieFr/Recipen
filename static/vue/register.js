@@ -12,7 +12,6 @@ Vue.component("main-register", {
                 <v-form
                   ref="form"
                   v-model="valid"
-                  lazy-validation
                 >
                   <v-text-field
                     v-model="name"
@@ -97,7 +96,7 @@ Vue.component("main-register", {
             passwordLength: v => (v && v.length >= 12 || tr('Min 12 characters')),
             passwordMatch: v => (v === this.password || tr("Passwords does not match"))
         },
-        valid: true,
+        valid: false,
     }},
     methods: {
         send() {
@@ -108,7 +107,9 @@ Vue.component("main-register", {
                     email: this.email,
                     password: this.password
                 },
-                response => {console.log(response);});
+                response => {
+                    eventBus.$emit("alertSuccess", response.data.message);
+                });
             }
         },
         clear() {

@@ -35,7 +35,9 @@ init = function(locale, dark=true) {
         delimiters: ['((', '))'],
         el: '#app',
         data: {
-            message: 'Hello Vue!',
+            show_alert: false,
+            message_alert: null,
+            type_alert: "error",
             dark: true,
             search: false,
             searchText: "",
@@ -56,20 +58,39 @@ init = function(locale, dark=true) {
             loadings: 0,
         },
         methods: {
-            notifError(message) {
-                this.snackbar_color = "error";
+            alert(message, type_message) {
+                this.show_alert = true;
+                this.message_alert = message;
+                this.type_alert = type_message;
+            },
+            alertError(message) {
+                this.alert(message, "error");
+            },
+            alertWarn(message) {
+                this.alert(message, "warning");
+            },
+            alertInfo(message) {
+                this.alert(message, "info");
+            },
+            alertSuccess(message) {
+                this.alert(message, "success");
+            },
+            notif(message, type_message) {
+                this.snackbar_color = type_message;
                 this.snackbar_message = message;
                 this.snackbar = true;
+            },
+            notifError(message) {
+                this.notif(message, "error");
             },
             notifWarn(message) {
-                this.snackbar_color = "warning";
-                this.snackbar_message = message;
-                this.snackbar = true;
+                this.notif(message, "warning");
             },
             notifInfo(message) {
-                this.snackbar_color = "info";
-                this.snackbar_message = message;
-                this.snackbar = true;
+                this.notif(message, "info");
+            },
+            notifSuccess(message) {
+                this.notif(message, "success");
             },
             showHideSearch() {
                 this.searchText = "";
@@ -109,15 +130,32 @@ init = function(locale, dark=true) {
         },
         created() {
             let $this = this;
+            // Alert events:
+            eventBus.$on('alertInfo', function (message) {
+                this.alertInfo(message);
+            }.bind(this));
+            eventBus.$on('alertError', function (message) {
+                this.alertError(message);
+            }.bind(this));
+            eventBus.$on('alertWarn', function (message) {
+                this.alertWarn(message);
+            }.bind(this));
+            eventBus.$on('alertSuccess', function (message) {
+                this.alertSuccess(message);
+            }.bind(this));
             // Notification events:
             eventBus.$on('notifInfo', function (message) {
                 this.notifInfo(message);
             }.bind(this));
             eventBus.$on('notifError', function (message) {
+                console.log("NOTIF ERROR", message);
                 this.notifError(message);
             }.bind(this));
             eventBus.$on('notifWarn', function (message) {
                 this.notifWarn(message);
+            }.bind(this));
+            eventBus.$on('notifSuccess', function (message) {
+                this.notifSuccess(message);
             }.bind(this));
             eventBus.$on('startLoading', function () {
                 console.log("start");

@@ -38,6 +38,12 @@
       >
         <v-container style="padding-top: 117px; display: table; padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; max-width: none;" fill-height>
 {#            <div style="width: 260px; display: table-cell; vertical-align: top; height: 100%;">#}
+            <div id="loading" v-show="loadings > 0">
+                <div class="loader"></div>
+            </div>
+            <v-alert v-model="show_alert" :type="type_alert" style="margin-top: 15px; position: fixed; width: 100%; z-index: 10;" dismissible>
+              (( message_alert ))
+            </v-alert>
             {% block bodycontent %}
             {% endblock %}
         </v-container>

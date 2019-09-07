@@ -6,10 +6,12 @@ from flask import Flask, render_template, request, jsonify, Response
 from flask_mongoengine import MongoEngine
 from settings import db_name, site_name, timezone, locale
 from werkzeug.exceptions import NotFound
-from mongoengine.errors import NotUniqueError
 from flask_babel import Babel
 from flask_babel import gettext as _
 from jinja2 import ext
+
+from view.register import page as register
+from view.panel import page as panel
 
 from mail import send_mail
 from model.recipe import Recipe, Ingredient, Instruction, Category
@@ -20,6 +22,8 @@ app = Flask(__name__)
 app.config['MONGODB_DB'] = db_name
 app.config['BABEL_DEFAULT_LOCALE'] = locale
 app.config['BABEL_DEFAULT_TIMEZONE'] = timezone
+app.register_blueprint(register)
+app.register_blueprint(panel)
 babel = Babel(app)
 db = MongoEngine(app)
 
@@ -47,40 +51,6 @@ def home():
     #                 author={"name": "Floréal", "id": "1"})
     # recipe.save()
     return render_template("web/basisnav.html", title=_("Panel") + " | " + site_name)
-
-@app.route('/panel')
-def panel_home():
-    return render_template("panel/basis.html", title=_("Panel") + " | " + site_name)
-
-
-@app.route('/register', methods=['GET'])
-def register_page():
-    return render_template("web/register.html", title=_("Register") + " | " + site_name)
-
-
-@app.route('/register', methods=['POST'])
-def register():
-    data = json.loads(request.data)
-    if data["email"] is None or data["email"] == "" or data["password"] is None or data["password"] == ""\
-            or data["name"] is None or data["name"] == "":
-        return Response(json.dumps({"success": False, "message": _("Missing required fields")}), status=409)
-    role = "basic"
-    nb_user = User.objects().count()
-    if nb_user == 0:
-        role = "admin"
-    user = User(name=data["name"], email=data["email"],
-                password=hashlib.sha3_512(data["password"].encode()).hexdigest(), role=role, active=False)
-    try:
-        user.save()
-        token = "?token=" + hashlib.md5((data["name"] + data["email"]).encode()).hexdigest() + "&mail=" + data["email"]
-        send_mail(data["email"], f"{site_name} - " + _("please activate your account"),
-                  _("Welcome %s,\n\nPlease click on this link to activate your account on %s:\n") %
-                  (data["name"], site_name) + request.url_root + "activate" + token)
-        return jsonify(success=True,
-                       message=_("User successfully created. Please check your mail to validate your account."))
-    except NotUniqueError:
-        return Response(json.dumps({"success": False,
-                                     "message": _("There is already a user with this mail address")}), status=409)
 
 
 @app.route('/login', methods=["GET", "POST"])

@@ -14,3 +14,5 @@ MAIL = {
 }
 
 PASSWORD_HASH_ROUNDS = 12
+
+SECRET_KEY = "mz(YvhXW:zyVNjLrY[bVSGZC98LH}7SZ[h*A:4{tjB*L?zX*WK"  # Change it to be unique for you

@@ -1,9 +1,10 @@
 import json
 import hashlib
-from flask import Blueprint, render_template, request, Response, jsonify
+from flask import Blueprint, render_template, request, Response, jsonify, flash ,redirect, url_for
 from flask_babel import gettext as _
 from flask_bcrypt import generate_password_hash
-from mongoengine.errors import NotUniqueError
+from mongoengine.errors import NotUniqueError, DoesNotExist
+from werkzeug.exceptions import BadRequest
 
 from settings import SITE_NAME, PASSWORD_HASH_ROUNDS
 
@@ -42,3 +43,22 @@ def register():
     except NotUniqueError:
         return Response(json.dumps({"success": False,
                                      "message": _("There is already a user with this mail address")}), status=409)
+
+
+@page.route('/activate')
+def activate_account():
+    token = request.args.get("token")
+    mail = request.args.get("mail")
+    if token is None or mail is None:
+        raise BadRequest(_("Invalid request"))
+    try:
+        user = User.objects.get(email=mail)
+    except DoesNotExist:
+        pass
+    else:
+        user_token = hashlib.md5((user.name + user.email).encode()).hexdigest()
+        if user_token == token:
+            user.active = True
+            user.save()
+    flash("success|" + _("Your account is now active. You can login in"))
+    return redirect(url_for("login"))

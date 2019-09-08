@@ -44,6 +44,16 @@
             <v-alert v-model="show_alert" :type="type_alert" style="margin-top: 15px; position: fixed; width: 100%; z-index: 10;" dismissible>
               (( message_alert ))
             </v-alert>
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  {% set message = message.split("|") %}
+                  <v-alert type="{{ message[0] }}" style="margin-top: 15px; position: fixed; width: 100%; z-index: 10;" dismissible>
+                    {{ message[1] }}
+                  </v-alert>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
             {% block bodycontent %}
             {% endblock %}
         </v-container>

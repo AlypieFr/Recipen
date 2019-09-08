@@ -14,6 +14,8 @@ from jinja2 import ext
 from view.register import page as register
 from view.panel import page as panel
 
+from settings import SECRET_KEY
+
 from mail import send_mail
 from model.recipe import Recipe, Ingredient, Instruction, Category
 from model.user import User
@@ -25,6 +27,7 @@ app.config['BABEL_DEFAULT_LOCALE'] = LOCALE
 app.config['BABEL_DEFAULT_TIMEZONE'] = TIMEZONE
 app.register_blueprint(register)
 app.register_blueprint(panel)
+app.secret_key = SECRET_KEY
 babel = Babel(app)
 db = MongoEngine(app)
 crypt = Bcrypt(app)

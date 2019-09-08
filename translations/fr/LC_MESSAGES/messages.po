@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-01 22:27+0200\n"
-"PO-Revision-Date: 2019-09-01 22:28+0200\n"
+"POT-Creation-Date: 2019-09-08 17:41+0200\n"
+"PO-Revision-Date: 2019-09-08 17:42+0200\n"
 "Last-Translator: \n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -19,19 +19,35 @@ msgstr ""
 "Generated-By: Babel 2.7.0\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: app.py:49 app.py:53
+#: app.py:55 view/panel.py:11
 msgid "Panel"
 msgstr "Panel"
 
-#: app.py:58
+#: app.py:67
+msgid "Login"
+msgstr "Connexion"
+
+#: templates/404.html:321
+msgid "GO BACK HOME"
+msgstr "RETOURNER À LA MAISON"
+
+#: templates/basis.html:51
+msgid "Close"
+msgstr "Fermer"
+
+#: view/register.py:19
 msgid "Register"
 msgstr "Créer un compte"
 
-#: app.py:73
+#: view/register.py:27
+msgid "Missing required fields"
+msgstr "Des champs requis sont manquants"
+
+#: view/register.py:38
 msgid "please activate your account"
 msgstr "veuillez activer votre compte"
 
-#: app.py:74
+#: view/register.py:39
 #, python-format
 msgid ""
 "Welcome %s,\n"
@@ -42,7 +58,7 @@ msgstr ""
 "\n"
 "Merci de cliquer sur ce lien afin d'activer cotre compte sur %s :\n"
 
-#: app.py:77
+#: view/register.py:42
 msgid ""
 "User successfully created. Please check your mail to validate your "
 "account."
@@ -50,18 +66,10 @@ msgstr ""
 "Utilisateur créé avec succès. Veuillez vérifier vos mails afin de "
 "valider votre compte."
 
-#: app.py:80
+#: view/register.py:45
 msgid "There is already a user with this mail address"
 msgstr "Un utilisateur existe déjà avec cette adresse e-mail"
 
-#: app.py:92
-msgid "Login"
-msgstr "Connexion"
-
-#: templates/404.html:321
-msgid "GO BACK HOME"
-msgstr "RETOURNER À LA MAISON"
-
-#: templates/basis.html:50
-msgid "Close"
-msgstr "Fermer"
+#: view/register.py:53
+msgid "Invalid request"
+msgstr "Requête invalide"

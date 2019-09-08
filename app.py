@@ -2,19 +2,19 @@
 
 import json
 import hashlib
-from flask import Flask, render_template, request, jsonify, Response
+from flask import Flask, render_template, request, flash, redirect, url_for, session
 from flask_mongoengine import MongoEngine
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import check_password_hash, generate_password_hash
 from settings import DB_NAME, SITE_NAME, TIMEZONE, LOCALE
 from werkzeug.exceptions import NotFound
 from flask_babel import Babel
 from flask_babel import gettext as _
-from jinja2 import ext
+from mongoengine.errors import DoesNotExist
 
 from view.register import page as register
 from view.panel import page as panel
 
-from settings import SECRET_KEY
+from settings import SECRET_KEY, PASSWORD_HASH_ROUNDS
 
 from mail import send_mail
 from model.recipe import Recipe, Ingredient, Instruction, Category
@@ -30,7 +30,6 @@ app.register_blueprint(panel)
 app.secret_key = SECRET_KEY
 babel = Babel(app)
 db = MongoEngine(app)
-crypt = Bcrypt(app)
 
 
 @app.context_processor
@@ -68,6 +67,35 @@ def login():
         if "after" in request.args and request.args.get("after") is not None:
             after = request.args.get("after")
         return render_template("web/login.html", email=email, after=after, title=_("Login") + " | " + SITE_NAME)
+    email = request.form['email']
+    password = request.form['password']
+    after = None
+    if "after" in request.form:
+        after = request.form["after"]
+    try:
+        user = User.objects.get(email=email)
+        if not check_password_hash(user.password, password):
+            raise DoesNotExist()
+    except DoesNotExist:
+        flash("error|" + _("Bad mail or password"))
+        if after is not None:
+            return redirect(url_for("login", email=email, after=after))
+        else:
+            return redirect(url_for("login", email=email))
+    else:
+        session["email"] = email
+        session["is_authenticated"] = True
+        session["name"] = user.name
+
+    return redirect("/" if after is None else after)
+
+
+@app.route("/logout", methods=["GET"])
+def logout():
+    session["is_authenticated"] = False
+    del session["email"]
+    del session["name"]
+    return redirect(url_for("home"))
 
 
 @app.errorhandler(NotFound)

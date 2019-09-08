@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-08 18:45+0200\n"
-"PO-Revision-Date: 2019-09-08 18:45+0200\n"
+"POT-Creation-Date: 2019-09-08 22:35+0200\n"
+"PO-Revision-Date: 2019-09-08 22:36+0200\n"
 "Last-Translator: \n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -19,13 +19,17 @@ msgstr ""
 "Generated-By: Babel 2.7.0\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: app.py:58 view/panel.py:11
+#: app.py:57 view/panel.py:18
 msgid "Panel"
 msgstr "Panel"
 
-#: app.py:70
+#: app.py:69
 msgid "Login"
 msgstr "Connexion"
+
+#: app.py:80
+msgid "Bad mail or password"
+msgstr "Mauvais e-mail ou mauvais mot de passe"
 
 #: templates/404.html:321
 msgid "GO BACK HOME"
@@ -35,19 +39,23 @@ msgstr "RETOURNER À LA MAISON"
 msgid "Close"
 msgstr "Fermer"
 
-#: view/register.py:19
+#: view/panel.py:12
+msgid "Please login to continue"
+msgstr "Veuillez vous connecter pour continuer"
+
+#: view/register.py:20
 msgid "Register"
 msgstr "Créer un compte"
 
-#: view/register.py:27
+#: view/register.py:28
 msgid "Missing required fields"
 msgstr "Des champs requis sont manquants"
 
-#: view/register.py:38
+#: view/register.py:40
 msgid "please activate your account"
 msgstr "veuillez activer votre compte"
 
-#: view/register.py:39
+#: view/register.py:41
 #, python-format
 msgid ""
 "Welcome %s,\n"
@@ -58,7 +66,7 @@ msgstr ""
 "\n"
 "Merci de cliquer sur ce lien afin d'activer cotre compte sur %s :\n"
 
-#: view/register.py:42
+#: view/register.py:44
 msgid ""
 "User successfully created. Please check your mail to validate your "
 "account."
@@ -66,14 +74,14 @@ msgstr ""
 "Utilisateur créé avec succès. Veuillez vérifier vos mails afin de "
 "valider votre compte."
 
-#: view/register.py:45
+#: view/register.py:47
 msgid "There is already a user with this mail address"
 msgstr "Un utilisateur existe déjà avec cette adresse e-mail"
 
-#: view/register.py:53
+#: view/register.py:55
 msgid "Invalid request"
 msgstr "Requête invalide"
 
-#: view/register.py:63
+#: view/register.py:65
 msgid "Your account is now active. You can login in"
 msgstr "Votre compte est maintenant activé. Vous pouvez vous connecter"

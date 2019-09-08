@@ -8,6 +8,7 @@ fr = {
     "E-mail must be valid": "Le mail n'est pas valide",
     "E-mails does not match": "Les mails ne correspondent pas",
     "Field required": "Champs requis",
+    "Forgotten password": "Mot de passe oublié",
     "Login|||title": "Se connecter",
     "Min 12 characters": "Min 12 caractères",
     "Name": "Nom",

@@ -6,5 +6,5 @@
 {% endblock %}
 
 {% block bodycontent %}
-    <main-login email="{{ email }}"></main-login>
+    <main-login email="{{ email }}" {% if after %}after="{{ after }}"{% endif %}></main-login>
 {% endblock %}

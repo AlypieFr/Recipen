@@ -11,13 +11,14 @@ Vue.component("main-login", {
               </v-card-title>
               <form action='login' method='POST'>
                 <v-card-text>
-                  <v-text-field :label='tr("E-mail")' type='text' name='email' id='email' v-model="login"></v-text-field>
+                  <v-text-field :label='tr("E-mail")' type='text' name='email' id='email' v-model="email_data"></v-text-field>
                   <v-text-field :label='tr("Password")' type='password' name='password' id='password'></v-text-field>
                 </v-card-text>
                 <input type="hidden" name="after" :value="after !== null ? after : '/'"/>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn type='submit' name='submit'>{{ tr("Connexion") }}</v-btn>
+                  <v-btn name='reset-password'>{{ tr("Forgotten password") }}</v-btn>
+                  <v-btn type='submit' name='submit' color="primary">{{ tr("Connexion") }}</v-btn>
                 </v-card-actions>
               </form>
             </v-card>
@@ -37,6 +38,13 @@ Vue.component("main-login", {
         }
     },
     data() { return {
-        login: this.username
-    }}
+        email_data: this.email
+    }},
+    mounted() {
+        if (this.email === null || this.email === "") {
+            $("#email").focus();
+        } else {
+            $("#password").focus();
+        }
+    }
 });

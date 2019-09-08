@@ -2,7 +2,7 @@
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from settings import mail
+from settings import MAIL
 import smtplib
 
 
@@ -11,7 +11,7 @@ def send_mail(to, subject, message):
     msg = MIMEMultipart()
 
     # setup the parameters of the message
-    msg['From'] = mail["from"]
+    msg['From'] = MAIL["from"]
     msg['To'] = to
     msg['Subject'] = subject
 
@@ -19,12 +19,12 @@ def send_mail(to, subject, message):
     msg.attach(MIMEText(message, 'plain'))
 
     # create server
-    server = smtplib.SMTP(f'{mail["server"]}: {mail["port"]}')
+    server = smtplib.SMTP(f'{MAIL["server"]}: {MAIL["port"]}')
 
     server.starttls()
 
     # Login Credentials for sending the mail
-    server.login(mail["username"], mail["password"])
+    server.login(MAIL["username"], MAIL["password"])
 
     # send the message via the server.
     server.sendmail(msg['From'], msg['To'], msg.as_string())

@@ -1,15 +1,16 @@
-db_name = "recipen"
-categories = ["Entrée", "Plat principal", "Dessert", "Accompagnements", "Base", "Biscuits & Friandises",
+DB_NAME = "recipen"
+CATEGORIES = ["Entrée", "Plat principal", "Dessert", "Accompagnements", "Base", "Biscuits & Friandises",
               "Pain & Viennoiserie", "Divers"]
-site_name = "Recipen"
-locale = "fr"
-timezone = "Europe/Paris"
+SITE_NAME = "Recipen"
+LOCALE = "en"
+TIMEZONE = "Europe/Paris"
 
-# PLEASE FILL MAIL SETTINGS TO MAKE REGISTER PAGE WORKING
-mail = {
+MAIL = {
     "server": "",
     "username": "",
     "from": "",
     "password": "",
     "port": 587
 }
+
+PASSWORD_HASH_ROUNDS = 12

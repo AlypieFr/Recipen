@@ -4,7 +4,8 @@ import json
 import hashlib
 from flask import Flask, render_template, request, jsonify, Response
 from flask_mongoengine import MongoEngine
-from settings import db_name, site_name, timezone, locale
+from flask_bcrypt import Bcrypt
+from settings import DB_NAME, SITE_NAME, TIMEZONE, LOCALE
 from werkzeug.exceptions import NotFound
 from flask_babel import Babel
 from flask_babel import gettext as _
@@ -19,20 +20,21 @@ from model.user import User
 
 
 app = Flask(__name__)
-app.config['MONGODB_DB'] = db_name
-app.config['BABEL_DEFAULT_LOCALE'] = locale
-app.config['BABEL_DEFAULT_TIMEZONE'] = timezone
+app.config['MONGODB_DB'] = DB_NAME
+app.config['BABEL_DEFAULT_LOCALE'] = LOCALE
+app.config['BABEL_DEFAULT_TIMEZONE'] = TIMEZONE
 app.register_blueprint(register)
 app.register_blueprint(panel)
 babel = Babel(app)
 db = MongoEngine(app)
+crypt = Bcrypt(app)
 
 
 @app.context_processor
 def inject_default_data():
     return dict({
-        "locale": locale,
-        "locales": [locale],
+        "locale": LOCALE,
+        "locales": [LOCALE],
     })
 
 
@@ -50,7 +52,7 @@ def home():
     #                 categories=[{"name": "Plat principal"}, {"name": "Entrée"}],
     #                 author={"name": "Floréal", "id": "1"})
     # recipe.save()
-    return render_template("web/basisnav.html", title=_("Panel") + " | " + site_name)
+    return render_template("web/basisnav.html", title=_("Panel") + " | " + SITE_NAME)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -62,12 +64,12 @@ def login():
             email = request.args.get("email")
         if "after" in request.args and request.args.get("after") is not None:
             after = request.args.get("after")
-        return render_template("web/login.html", email=email, after=after, title=_("Login") + " | " + site_name)
+        return render_template("web/login.html", email=email, after=after, title=_("Login") + " | " + SITE_NAME)
 
 
 @app.errorhandler(NotFound)
 def error_handle_not_found(e):
-    return render_template("404.html", title=site_name)
+    return render_template("404.html", title=SITE_NAME)
 
 
 if __name__ == "__main__":

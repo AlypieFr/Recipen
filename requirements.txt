@@ -3,3 +3,4 @@ flask-mongoengine
 mongoengine
 babel
 flask-babel
+flask-bcrypt

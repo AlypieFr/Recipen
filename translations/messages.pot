@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-08 17:41+0200\n"
+"POT-Creation-Date: 2019-09-08 18:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: app.py:55 view/panel.py:11
+#: app.py:58 view/panel.py:11
 msgid "Panel"
 msgstr ""
 
-#: app.py:67
+#: app.py:70
 msgid "Login"
 msgstr ""
 
@@ -65,5 +65,9 @@ msgstr ""
 
 #: view/register.py:53
 msgid "Invalid request"
+msgstr ""
+
+#: view/register.py:63
+msgid "Your account is now active. You can login in"
 msgstr ""
 

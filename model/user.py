@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, DateTimeField, IntField, BooleanField
+from mongoengine import Document, StringField, DateTimeField, BooleanField
 import datetime
 
 
@@ -10,4 +10,4 @@ class User(Document):
     date_last_connexion = DateTimeField(required=False, null=True)
     role = StringField(required=True, choices=["admin", "editor", "moderator", "basic"])
     active = BooleanField(required=False, default=False)
-    enabled = BooleanField(required=False, default=True)
+    mail_token = StringField(required=False)

@@ -6,6 +6,7 @@ from flask_bcrypt import generate_password_hash
 from mongoengine.errors import NotUniqueError, DoesNotExist
 from werkzeug.exceptions import BadRequest
 
+from functions import random_string
 from settings import SITE_NAME, PASSWORD_HASH_ROUNDS
 
 from mail import send_mail
@@ -30,11 +31,12 @@ def register():
     if nb_user == 0:
         role = "admin"
     password = generate_password_hash(data["password"], PASSWORD_HASH_ROUNDS)
+    mail_token = random_string()
     user = User(name=data["name"], email=data["email"],
-                password=password, role=role, active=False)
+                password=password, role=role, active=False, mail_token=mail_token)
     try:
         user.save()
-        token = "?token=" + hashlib.md5((data["name"] + data["email"]).encode()).hexdigest() + "&mail=" + data["email"]
+        token = "?token=" + mail_token + "&mail=" + data["email"]
         send_mail(data["email"], f"{SITE_NAME} - " + _("please activate your account"),
                   _("Welcome %s,\n\nPlease click on this link to activate your account on %s:\n") %
                   (data["name"], SITE_NAME) + request.url_root + "activate" + token)
@@ -56,9 +58,9 @@ def activate_account():
     except DoesNotExist:
         pass
     else:
-        user_token = hashlib.md5((user.name + user.email).encode()).hexdigest()
-        if user_token == token:
+        if user.mail_token == token:
             user.active = True
+            user.mail_token = None
             user.save()
     flash("success|" + _("Your account is now active. You can login in"))
     return redirect(url_for("login"))

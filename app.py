@@ -9,6 +9,7 @@ from settings import DB_NAME, SITE_NAME, TIMEZONE, LOCALE
 from werkzeug.exceptions import NotFound
 from flask_babel import Babel
 from flask_babel import gettext as _
+from flask_session import Session
 from mongoengine.errors import DoesNotExist
 
 from view.register import page as register
@@ -25,9 +26,12 @@ app = Flask(__name__)
 app.config['MONGODB_DB'] = DB_NAME
 app.config['BABEL_DEFAULT_LOCALE'] = LOCALE
 app.config['BABEL_DEFAULT_TIMEZONE'] = TIMEZONE
+app.config['SESSION_TYPE'] = 'mongodb'
+app.config['SESSION_MONGODB_DB'] = DB_NAME
 app.register_blueprint(register)
 app.register_blueprint(panel)
 app.secret_key = SECRET_KEY
+Session(app)
 babel = Babel(app)
 db = MongoEngine(app)
 

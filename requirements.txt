@@ -4,3 +4,4 @@ mongoengine
 babel
 flask-babel
 flask-bcrypt
+flask-session

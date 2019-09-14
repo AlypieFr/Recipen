@@ -22,6 +22,7 @@ Vue.component("main-login", {
                 </v-card-actions>
               </form>
             </v-card>
+            <p style="text-align: center; margin-top: 10px;">{{ tr("No account? Please") }} <a href='/register'>{{ tr("register", "action") }}</a>.</p>
           </v-flex>
         </v-layout>
       </v-container>

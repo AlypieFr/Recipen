@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-08 22:35+0200\n"
+"POT-Creation-Date: 2019-09-14 16:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: app.py:57 view/panel.py:18
+#: app.py:62 view/panel.py:21
 msgid "Panel"
 msgstr ""
 
-#: app.py:69
+#: app.py:74
 msgid "Login"
 msgstr ""
 
-#: app.py:80
+#: app.py:87
 msgid "Bad mail or password"
+msgstr ""
+
+#: app.py:93
+msgid ""
+"Your account is not active. Please check your e-mails to confirm your "
+"account"
 msgstr ""
 
 #: templates/404.html:321
@@ -37,7 +43,11 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: view/panel.py:12
+#: view/panel.py:13
+msgid "Not authenticated"
+msgstr ""
+
+#: view/panel.py:15
 msgid "Please login to continue"
 msgstr ""
 

@@ -15,9 +15,10 @@ from mongoengine.errors import DoesNotExist
 from view.register import page as register
 from view.panel import page as panel
 
-from settings import SECRET_KEY, PASSWORD_HASH_ROUNDS
+from exceptions import InvalidPassword, NotActiveUser
 
-from mail import send_mail
+from settings import SECRET_KEY
+
 from model.recipe import Recipe, Ingredient, Instruction, Category
 from model.user import User
 
@@ -79,9 +80,17 @@ def login():
     try:
         user = User.objects.get(email=email)
         if not check_password_hash(user.password, password):
-            raise DoesNotExist()
-    except DoesNotExist:
+            raise InvalidPassword()
+        if not user.active:
+            raise NotActiveUser()
+    except (DoesNotExist, InvalidPassword):
         flash("error|" + _("Bad mail or password"))
+        if after is not None:
+            return redirect(url_for("login", email=email, after=after))
+        else:
+            return redirect(url_for("login", email=email))
+    except NotActiveUser:
+        flash("error|" + _("Your account is not active. Please check your e-mails to confirm your account"))
         if after is not None:
             return redirect(url_for("login", email=email, after=after))
         else:

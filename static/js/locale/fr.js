@@ -13,10 +13,12 @@ fr = {
     "Min 12 characters": "Min 12 caractères",
     "Name": "Nom",
     "Name must be less than 50 characters": "Le nom doit faire moins de 50 caractères",
+    "No account? Please": "Pas encore de compte ? Veuillez",
     "Password": "Mot de passe",
     "Password (confirmation)": "Mot de passe (confirmation)",
     "Passwords does not match": "Les mot de passe ne correspondent pas",
     "Register": "Créer un compte",
     "Request fails. Please contact the support.": "La requête a échouée. Veuillez contacter le support.",
-    "Send": "Envoyer"
+    "Send": "Envoyer",
+    "register|||action": "vous enregistrer"
 };

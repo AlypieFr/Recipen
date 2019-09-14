@@ -42,7 +42,6 @@ init = function(locale, dark=true) {
             search: false,
             searchText: "",
             searchFieldColor: dark ? "white": "black",
-            searchLaunched: false,
             menuItems: [
                 {title: "Home", icon: "mdi-news"},
                 {title: "Recipes", icon: "mdi-news"},
@@ -95,18 +94,17 @@ init = function(locale, dark=true) {
             showHideSearch() {
                 this.searchText = "";
                 this.search = !this.search;
-                setTimeout(function() {$("#search").focus();}, 10);
+                if (this.search) {
+                    setTimeout(function () {
+                        $("#search").focus();
+                    }, 10);
+                }
+                else {
+                    $("#btn-search").blur();
+                }
             },
             launchSearch() {
                 console.log("Searching for " + this.searchText + "...");
-                this.searchLaunched = true;
-            },
-            searchBoxBlur() {
-                if (this.searchText === '' || this.searchText === null) {
-                    this.search = false;
-                } else if(!this.searchLaunched) {
-                    this.launchSearch()
-                }
             },
             onResize () {
               this.windowSize = { x: window.innerWidth, y: window.innerHeight }

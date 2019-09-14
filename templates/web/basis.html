@@ -24,10 +24,10 @@
 
         <div class="flex-grow-1"></div>
 
-        <v-btn icon @click="showHideSearch()">
+        <v-btn icon @click="showHideSearch()" id="btn-search">
         <v-icon>mdi-magnify</v-icon>
       </v-btn><v-text-field :color="searchFieldColor" v-show="search" ref="search" id="search" @keydown.esc="showHideSearch()"
-        @keydown.enter="launchSearch()" v-model="searchText" @blur="searchBoxBlur()" @focus="searchLaunched=false"></v-text-field>
+        @keydown.enter="launchSearch()" v-model="searchText"></v-text-field>
       </v-app-bar>
       <v-sheet
         id="scrolling-techniques-5"

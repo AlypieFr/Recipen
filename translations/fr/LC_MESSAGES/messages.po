@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-14 16:55+0200\n"
-"PO-Revision-Date: 2019-09-14 16:56+0200\n"
+"POT-Creation-Date: 2019-09-14 18:34+0200\n"
+"PO-Revision-Date: 2019-09-14 18:34+0200\n"
 "Last-Translator: \n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -19,19 +19,19 @@ msgstr ""
 "Generated-By: Babel 2.7.0\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: app.py:62 view/panel.py:21
+#: app.py:68 templates/web/basis.html:48 view/panel.py:22
 msgid "Panel"
 msgstr "Panel"
 
-#: app.py:74
+#: app.py:80 templates/web/basis.html:65
 msgid "Login"
-msgstr "Connexion"
+msgstr "Se connecter"
 
-#: app.py:87
+#: app.py:93
 msgid "Bad mail or password"
 msgstr "Mauvais e-mail ou mauvais mot de passe"
 
-#: app.py:93
+#: app.py:99
 msgid ""
 "Your account is not active. Please check your e-mails to confirm your "
 "account"
@@ -47,11 +47,19 @@ msgstr "RETOURNER À LA MAISON"
 msgid "Close"
 msgstr "Fermer"
 
-#: view/panel.py:13
+#: templates/panel/basis.html:47
+msgid "See website"
+msgstr "Voir le site"
+
+#: templates/panel/basis.html:53 templates/web/basis.html:54
+msgid "Logout"
+msgstr "Se déconnecter"
+
+#: view/panel.py:14
 msgid "Not authenticated"
 msgstr "Non authentifié"
 
-#: view/panel.py:15
+#: view/panel.py:16
 msgid "Please login to continue"
 msgstr "Veuillez vous connecter pour continuer"
 

@@ -17,7 +17,7 @@ page = Blueprint('register', __name__)
 
 @page.route('/register', methods=['GET'])
 def register_page():
-    return render_template("web/register.html", title=_("Register") + " | " + SITE_NAME)
+    return render_template("web/register.html", title=_("Register") + " | " + SITE_NAME, show_search=False)
 
 
 @page.route('/register', methods=['POST'])

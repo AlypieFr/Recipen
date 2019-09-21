@@ -1,21 +1,21 @@
 {% extends "basis.html" %}
 
 {% block appbody %}
-      <v-app-bar
-        absolute
-        color="#43a047"
-        shrink-on-scroll
-        prominent
-        src="https://picsum.photos/1920/1080?random"
-{#        fade-img-on-scroll#}
-        scroll-target="#scrolling-techniques-5"
-        scroll-threshold="500"
-      >
+    <v-app-bar
+            absolute
+            color="#43a047"
+            shrink-on-scroll
+            prominent
+            src="https://picsum.photos/1920/1080?random"
+            {#        fade-img-on-scroll#}
+            scroll-target="#scrolling-techniques-5"
+            scroll-threshold="500"
+    >
         <template v-slot:img="{ props }">
-          <v-img
-            v-bind="props"
-            gradient="to top right, rgba(55,236,186,.7), rgba(25,32,72,.7)"
-          ></v-img>
+            <v-img
+                    v-bind="props"
+                    gradient="to top right, rgba(55,236,186,.7), rgba(25,32,72,.7)"
+            ></v-img>
         </template>
 
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
@@ -24,38 +24,106 @@
 
         <div class="flex-grow-1"></div>
 
-        <v-btn icon @click="showHideSearch()" id="btn-search">
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn><v-text-field :color="searchFieldColor" v-show="search" ref="search" id="search" @keydown.esc="showHideSearch()"
-        @keydown.enter="launchSearch()" v-model="searchText"></v-text-field>
-      </v-app-bar>
-      <v-sheet
-        id="scrolling-techniques-5"
-        class="overflow-y-auto"
-        max-height="100vh"
-        min-height="100%"
-        style="background: none"
-      >
-        <v-container style="padding-top: 117px; display: table; padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; max-width: none;" fill-height>
-{#            <div style="width: 260px; display: table-cell; vertical-align: top; height: 100%;">#}
+        <v-btn icon @click="showHideSearch()" id="btn-search" v-if="show_search">
+            <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+        <v-text-field :color="searchFieldColor" v-show="search" ref="search" id="search" @keydown.esc="showHideSearch()"
+                      @keydown.enter="launchSearch()" v-model="searchText"></v-text-field>
+        <v-menu v-if="logged"
+                v-model="menu"
+                top
+                right
+                transition="scale-transition"
+                origin="top right"
+        >
+            <template v-slot:activator="{ on }">
+                <v-chip
+                        pill
+                        v-on="on"
+                        style="margin-top: 5px;"
+                >
+                    <v-avatar left>
+                        <v-img :src="avatar_src"></v-img>
+                    </v-avatar>
+                    <b style="padding-left: 5px; padding-right: 5px;">{{ name }}</b>
+                </v-chip>
+            </template>
+            <v-card width="300">
+                <v-list dark>
+                    <v-list-item>
+                        <v-list-item-avatar>
+                            <v-img :src="avatar_src"></v-img>
+                        </v-list-item-avatar>
+                        <v-list-item-content>
+                            <v-list-item-title>(( name ))</v-list-item-title>
+                            <v-list-item-subtitle>((user_role_name ))</v-list-item-subtitle>
+                        </v-list-item-content>
+{#                        <v-list-item-action>#}
+{#                            <v-btn#}
+{#                                    icon#}
+{#                                    @click="menu = false"#}
+{#                            >#}
+{#                                <v-icon>mdi-close-circle</v-icon>#}
+{#                            </v-btn>#}
+{#                        </v-list-item-action>#}
+                    </v-list-item>
+                </v-list>
+                <v-list>
+                    <v-list-item
+                            key="panel"
+                            href="/panel"
+                    >
+                        <v-list-item-title>{{ _("Panel") }}</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item
+                            key="logout"
+                            href="/logout"
+                    >
+                        <v-list-item-title>{{ _("Logout") }}</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-card>
+        </v-menu>
+        <v-tooltip bottom v-else>
+            <template v-slot:activator="{ on }">
+                <v-chip pill v-on="on" style="margin-top: 5px;" href="/login">
+                    <v-icon>mdi-account</v-icon>
+                </v-chip>
+            </template>
+            <span>{{ _("Login") }}</span>
+        </v-tooltip>
+    </v-app-bar>
+    <v-sheet
+            id="scrolling-techniques-5"
+            class="overflow-y-auto"
+            max-height="100vh"
+            min-height="100%"
+            style="background: none"
+    >
+        <v-container
+                style="padding-top: 117px; display: table; padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; max-width: none;"
+                fill-height>
+            {#            <div style="width: 260px; display: table-cell; vertical-align: top; height: 100%;">#}
             <div id="loading" v-show="loadings > 0">
                 <div class="loader"></div>
             </div>
-            <v-alert v-model="show_alert" :type="type_alert" style="margin-top: 15px; position: fixed; width: 100%; z-index: 10;" dismissible>
-              (( message_alert ))
+            <v-alert v-model="show_alert" :type="type_alert"
+                     style="margin-top: 15px; position: fixed; width: 100%; z-index: 10;" dismissible>
+                (( message_alert ))
             </v-alert>
             {% with messages = get_flashed_messages() %}
-              {% if messages %}
-                {% for message in messages %}
-                  {% set message = message.split("|") %}
-                  <v-alert type="{{ message[0] }}" style="margin-top: 15px; position: fixed; width: 100%; z-index: 10;" dismissible>
-                    {{ message[1] }}
-                  </v-alert>
-                {% endfor %}
-              {% endif %}
+                {% if messages %}
+                    {% for message in messages %}
+                        {% set message = message.split("|") %}
+                        <v-alert type="{{ message[0] }}"
+                                 style="margin-top: 15px; position: fixed; width: 100%; z-index: 10;" dismissible>
+                            {{ message[1] }}
+                        </v-alert>
+                    {% endfor %}
+                {% endif %}
             {% endwith %}
             {% block bodycontent %}
             {% endblock %}
         </v-container>
-      </v-sheet>
+    </v-sheet>
 {% endblock %}

@@ -52,3 +52,7 @@ html {
 header {
   z-index: 1001 !important;
 }
+
+.v-menu__content.menuable__content__active {
+  top: 8px !important;
+}

@@ -23,38 +23,61 @@ Vue.directive('blur', {
   });
 })(jQuery);
 
-init = function(locale, dark=true) {
+init = function(locale, email_hash=null, name=null, dark=true, show_search=true, role="basic") {
     LANG = locale;
     eventBus = new Vue();
+    dark = dark !== null && dark !== undefined && dark !== "false" && dark !== "False";
+    show_search = show_search !== null && show_search !== undefined && show_search !== "false"
+        && show_search !== "False";
     app = new Vue({
         vuetify: new Vuetify({
             theme: {
-               dark: dark,
+               dark: dark === true || dark === "True",
             }
         }),
         delimiters: ['((', '))'],
         el: '#app',
         data: {
-            show_alert: false,
-            message_alert: null,
-            type_alert: "error",
             dark: true,
+            email_hash: email_hash,
+            user_role: role,
+            loadings: 0,
+            logged: email_hash && email_hash !== "None" && email_hash !== "null" && email_hash !== "none",
+            message_alert: null,
+            name: name,
+            show_search: show_search,
             search: false,
-            searchText: "",
             searchFieldColor: dark ? "white": "black",
-            menuItems: [
-                {title: "Home", icon: "mdi-news"},
-                {title: "Recipes", icon: "mdi-news"},
-            ],
+            searchText: "",
+            show_alert: false,
+            snackbar: false,
+            snackbar_color: "info",
+            snackbar_message: null,
+            snackbar_multiline: false,
+            type_alert: "error",
             windowSize: {
               x: 0,
               y: 0
             },
-            snackbar: false,
-            snackbar_message: null,
-            snackbar_color: "info",
-            snackbar_multiline: false,
-            loadings: 0,
+            menu: false,
+        },
+        computed: {
+            user_role_name() {
+                switch (this.user_role) {
+                    case "admin":
+                        return tr("Admin")
+                    case "moderator":
+                        return tr("Moderator")
+                    case "editor":
+                        return tr("Editor")
+                    default:
+                        return tr("Simple user")
+                }
+            },
+            avatar_src() {
+                return 'https://www.gravatar.com/avatar/' + email_hash +
+                    '?default=http://www.flo-art.fr/static/images/account-' + (dark ? '-dark' : '') + '.png';
+            }
         },
         methods: {
             alert(message, type_message) {

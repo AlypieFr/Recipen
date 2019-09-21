@@ -16,6 +16,7 @@ from view.register import page as register
 from view.panel import page as panel
 
 from exceptions import InvalidPassword, NotActiveUser
+from functions import is_authenticated
 
 from settings import SECRET_KEY
 
@@ -39,10 +40,18 @@ db = MongoEngine(app)
 
 @app.context_processor
 def inject_default_data():
-    return dict({
+    data = {
         "locale": LOCALE,
         "locales": [LOCALE],
-    })
+        "email": None,
+        "dark": True,
+        "show_search": True
+    }
+    if is_authenticated():
+        data["email_hash"] = hashlib.md5(session["email"].encode()).hexdigest()
+        data["name"] = session["name"]
+        data["role"] = session["role"]
+    return dict(data)
 
 
 @app.route('/')
@@ -71,7 +80,8 @@ def login():
             email = request.args.get("email")
         if "after" in request.args and request.args.get("after") is not None:
             after = request.args.get("after")
-        return render_template("web/login.html", email=email, after=after, title=_("Login") + " | " + SITE_NAME)
+        return render_template("web/login.html", email=email, after=after, title=_("Login") + " | " + SITE_NAME,
+                               show_search=False)
     email = request.form['email']
     password = request.form['password']
     after = None
@@ -99,6 +109,7 @@ def login():
         session["email"] = email
         session["is_authenticated"] = True
         session["name"] = user.name
+        session["role"] = user.role
 
     return redirect("/" if after is None else after)
 

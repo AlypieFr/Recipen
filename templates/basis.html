@@ -3,7 +3,7 @@
 {% block script %}
 {{ super() }}
 <script src="/static/js/vue.js" defer></script>
-<script src="/static/js/vuetify-v2.0.10.min.js" defer></script>
+<script src="/static/js/vuetify-v2.0.18.min.js" defer></script>
 <script src="/static/js/jquery-3.4.1.min.js" defer></script>
 <script src="/static/js/axios.min.js" defer></script>
 <script src="/static/js/translate.js" defer></script>
@@ -20,12 +20,12 @@
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/static/css/materialdesignicons.min.css">
-<link rel="stylesheet" type="text/css" href="/static/css/vuetify-v2.0.10.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/vuetify-v2.0.18.min.css">
 <link rel="stylesheet" type="text/css" href="/static/css/recipen.css">
 {% endblock %}
 
 {% block body_attr %}
-    onload="init('{{ locale }}');"
+    onload="init('{{ locale }}', '{{ email_hash }}', '{{ name }}', '{{ dark }}', '{{ show_search }}', '{{ role }}');"
 {% endblock %}
 
 {% block body %}

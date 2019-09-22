@@ -30,6 +30,7 @@ def inject_default_data():
         ]
     }
 
+
 @page.before_request
 def before_request():
     if not is_authenticated():

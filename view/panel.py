@@ -42,12 +42,12 @@ def before_request():
 
 @page.route('/')
 def home():
-    return render_template("panel/home.html")
+    return render_template("panel/basis.html")
 
 
 @page.route('/profile')
 def profile():
-    return render_template("panel/profile.html")
+    return render_template("panel/basis.html")
 
 
 @page.route('/profile', methods=['POST'])

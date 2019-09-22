@@ -2,9 +2,9 @@
 
 import json
 import hashlib
-from flask import Flask, render_template, request, flash, redirect, url_for, session
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from flask_mongoengine import MongoEngine
-from flask_bcrypt import check_password_hash, generate_password_hash
+from flask_bcrypt import check_password_hash
 from settings import DB_NAME, SITE_NAME, TIMEZONE, LOCALE
 from werkzeug.exceptions import NotFound
 from flask_babel import Babel
@@ -16,7 +16,7 @@ from view.register import page as register
 from view.panel import page as panel
 
 from exceptions import InvalidPassword, NotActiveUser
-from functions import is_authenticated
+from functions import is_authenticated, get_title
 
 from settings import SECRET_KEY
 
@@ -43,9 +43,11 @@ def inject_default_data():
     data = {
         "locale": LOCALE,
         "locales": [LOCALE],
-        "email": None,
         "dark": True,
-        "show_search": True
+        "show_search": True,
+        "request": request,
+        "main_title": SITE_NAME,
+        "title": get_title(request.path)
     }
     if is_authenticated():
         data["email_hash"] = hashlib.md5(session["email"].encode()).hexdigest()
@@ -68,11 +70,13 @@ def home():
     #                 categories=[{"name": "Plat principal"}, {"name": "Entrée"}],
     #                 author={"name": "Floréal", "id": "1"})
     # recipe.save()
-    return render_template("web/basisnav.html", title=_("Panel") + " | " + SITE_NAME)
+    return render_template("web/basisnav.html")
 
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    if is_authenticated():
+        return redirect(url_for("home"))
     if request.method == 'GET':
         email = ""
         after = "/"
@@ -80,8 +84,7 @@ def login():
             email = request.args.get("email")
         if "after" in request.args and request.args.get("after") is not None:
             after = request.args.get("after")
-        return render_template("web/login.html", email=email, after=after, title=_("Login") + " | " + SITE_NAME,
-                               show_search=False)
+        return render_template("web/login.html", email=email, after=after, show_search=False)
     email = request.form['email']
     password = request.form['password']
     after = None
@@ -120,6 +123,11 @@ def logout():
     del session["email"]
     del session["name"]
     return redirect(url_for("home"))
+
+
+@app.route("/data/page_title")
+def page_title():
+    return jsonify(title=get_title(request.args.get("endpoint")))
 
 
 @app.errorhandler(NotFound)

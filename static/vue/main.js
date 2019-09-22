@@ -23,7 +23,7 @@ Vue.directive('blur', {
   });
 })(jQuery);
 
-init = function(locale, email_hash=null, name=null, dark=true, show_search=true, role="basic") {
+init = function(locale, email_hash=null, name=null, dark=true, show_search=true, role="basic", page=null) {
     LANG = locale;
     eventBus = new Vue();
     dark = dark !== null && dark !== undefined && dark !== "false" && dark !== "False";
@@ -45,6 +45,8 @@ init = function(locale, email_hash=null, name=null, dark=true, show_search=true,
             logged: email_hash && email_hash !== "None" && email_hash !== "null" && email_hash !== "none",
             message_alert: null,
             name: name,
+            navForceOpen: null,
+            navOpen: true,
             show_search: show_search,
             search: false,
             searchFieldColor: dark ? "white": "black",
@@ -60,6 +62,7 @@ init = function(locale, email_hash=null, name=null, dark=true, show_search=true,
               y: 0
             },
             menu: false,
+            page: page
         },
         computed: {
             user_role_name() {
@@ -129,12 +132,39 @@ init = function(locale, email_hash=null, name=null, dark=true, show_search=true,
             launchSearch() {
                 console.log("Searching for " + this.searchText + "...");
             },
+            showHideMenu() {
+                if (this.navForceOpen === null) {
+                    this.navForceOpen = false;
+                    this.navOpen = false;
+                }
+                else {
+                    this.navForceOpen = !this.navForceOpen;
+                    this.navOpen = this.navForceOpen;
+                }
+            },
             onResize () {
               this.windowSize = { x: window.innerWidth, y: window.innerHeight }
+            },
+            isPage(page) {
+                return page === this.page || page === this.page + "/" || page + "/" === this.page
+            },
+            setPage(page, keep_history=false) {
+                console.log("set page");
+                this.page = page;
+                session.get("/data/page_title", {endpoint: page}, response => {
+                    let title = response.data.title;
+                    document.title = title;
+                    if (keep_history) {
+                        window.history.replaceState("", title, page);
+                    } else {
+                        window.history.pushState("", title, page);
+                    }
+                });
             }
         },
         mounted() {
           let vm = this;
+          let $this = this;
           window.addEventListener('keydown', function(e) {
               // If down arrow was pressed...
               if (e.ctrlKey && e.code === "KeyF") {
@@ -147,45 +177,51 @@ init = function(locale, email_hash=null, name=null, dark=true, show_search=true,
                   }
               }
           });
+          $(window).on('popstate', function() {
+              $this.setPage(window.location.pathname, true);
+          });
           this.onResize();
         },
         created() {
             let $this = this;
             // Alert events:
-            eventBus.$on('alertInfo', function (message) {
+            eventBus.$on('alertInfo', (message) => {
                 this.alertInfo(message);
-            }.bind(this));
-            eventBus.$on('alertError', function (message) {
+            });
+            eventBus.$on('alertError', (message) => {
                 this.alertError(message);
-            }.bind(this));
-            eventBus.$on('alertWarn', function (message) {
+            });
+            eventBus.$on('alertWarn', (message) => {
                 this.alertWarn(message);
-            }.bind(this));
-            eventBus.$on('alertSuccess', function (message) {
+            });
+            eventBus.$on('alertSuccess', (message) => {
                 this.alertSuccess(message);
-            }.bind(this));
+            });
             // Notification events:
-            eventBus.$on('notifInfo', function (message) {
+            eventBus.$on('notifInfo', (message) => {
                 this.notifInfo(message);
-            }.bind(this));
-            eventBus.$on('notifError', function (message) {
-                console.log("NOTIF ERROR", message);
+            });
+            eventBus.$on('notifError', (message) => {
                 this.notifError(message);
-            }.bind(this));
-            eventBus.$on('notifWarn', function (message) {
+            });
+            eventBus.$on('notifWarn', (message) => {
                 this.notifWarn(message);
-            }.bind(this));
-            eventBus.$on('notifSuccess', function (message) {
+            });
+            eventBus.$on('notifSuccess', (message) => {
                 this.notifSuccess(message);
-            }.bind(this));
-            eventBus.$on('startLoading', function () {
-                console.log("start");
-                $this.loadings += 1;
             });
-            eventBus.$on('stopLoading', function () {
-                console.log("stop");
-                $this.loadings -= 1;
+            eventBus.$on('startLoading', () => {
+                console.debug("Start loading");
+                this.loadings += 1;
             });
+            eventBus.$on('stopLoading', () => {
+                console.debug("Stop loading");
+                this.loadings -= 1;
+            });
+            eventBus.$on("userChange", (user) => {
+                console.log("User change");
+                this.name = user.name;
+            })
         },
     });
 };

@@ -36,12 +36,19 @@ def register():
                 password=password, role=role, active=False, mail_token=mail_token)
     try:
         user.save()
-        token = "?token=" + mail_token + "&mail=" + data["email"]
-        send_mail(data["email"], f"{SITE_NAME} - " + _("please activate your account"),
-                  _("Welcome %s,\n\nPlease click on this link to activate your account on %s:\n") %
-                  (data["name"], SITE_NAME) + request.url_root + "activate" + token)
-        return jsonify(success=True,
-                       message=_("User successfully created. Please check your mail to validate your account."))
+        try:
+            token = "?token=" + mail_token + "&mail=" + data["email"]
+            send_mail(data["email"], f"{SITE_NAME} - " + _("please activate your account"),
+                      _("Welcome %s,\n\nPlease click on this link to activate your account on %s:\n") %
+                      (data["name"], SITE_NAME) + request.url_root + "activate" + token)
+            return jsonify(success=True,
+                           message=_("User successfully created. Please check your mail to validate your account."))
+        except Exception as e:
+            try:
+                user.delete()
+            except:
+                pass
+            raise e
     except NotUniqueError:
         return Response(json.dumps({"success": False,
                                      "message": _("There is already a user with this mail address")}), status=409)

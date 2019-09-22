@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-14 18:34+0200\n"
-"PO-Revision-Date: 2019-09-14 18:34+0200\n"
+"POT-Creation-Date: 2019-09-22 12:11+0200\n"
+"PO-Revision-Date: 2019-09-22 12:11+0200\n"
 "Last-Translator: \n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -19,19 +19,11 @@ msgstr ""
 "Generated-By: Babel 2.7.0\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: app.py:68 templates/web/basis.html:48 view/panel.py:22
-msgid "Panel"
-msgstr "Panel"
-
-#: app.py:80 templates/web/basis.html:65
-msgid "Login"
-msgstr "Se connecter"
-
-#: app.py:93
+#: app.py:101
 msgid "Bad mail or password"
 msgstr "Mauvais e-mail ou mauvais mot de passe"
 
-#: app.py:99
+#: app.py:107
 msgid ""
 "Your account is not active. Please check your e-mails to confirm your "
 "account"
@@ -39,37 +31,65 @@ msgstr ""
 "Votre compte n'est pas activé. Veuillez vérifier vos mails afin de "
 "valider votre compte"
 
+#: functions.py:24 view/panel.py:25
+msgid "User profile"
+msgstr "Profil utilisateur"
+
+#: functions.py:26 templates/web/basis.html:76
+msgid "Panel"
+msgstr "Panel"
+
+#: functions.py:28 templates/web/basis.html:93
+msgid "Login"
+msgstr "Se connecter"
+
+#: functions.py:30 view/register.py:20
+msgid "Register"
+msgstr "Créer un compte"
+
 #: templates/404.html:321
 msgid "GO BACK HOME"
 msgstr "RETOURNER À LA MAISON"
 
-#: templates/basis.html:51
+#: templates/basis.html:53
 msgid "Close"
 msgstr "Fermer"
 
-#: templates/panel/basis.html:47
+#: templates/panel/basis.html:79
 msgid "See website"
 msgstr "Voir le site"
 
-#: templates/panel/basis.html:53 templates/web/basis.html:54
+#: templates/panel/basis.html:85 templates/web/basis.html:82
 msgid "Logout"
 msgstr "Se déconnecter"
 
-#: view/panel.py:14
+#: view/panel.py:20
+msgid "Home"
+msgstr "Accueil"
+
+#: view/panel.py:36
 msgid "Not authenticated"
 msgstr "Non authentifié"
 
-#: view/panel.py:16
+#: view/panel.py:38
 msgid "Please login to continue"
 msgstr "Veuillez vous connecter pour continuer"
 
-#: view/register.py:20
-msgid "Register"
-msgstr "Créer un compte"
-
-#: view/register.py:28
+#: view/panel.py:56 view/register.py:28
 msgid "Missing required fields"
 msgstr "Des champs requis sont manquants"
+
+#: view/panel.py:68
+msgid "Incorrect current password"
+msgstr "Le mot de passe actuel est invalide"
+
+#: view/panel.py:70
+msgid "Inactive user"
+msgstr "Utilisateur inactif"
+
+#: view/panel.py:76
+msgid "User profile successfully updated"
+msgstr "Le profil utilisateur a été mis à jour avec succès"
 
 #: view/register.py:40
 msgid "please activate your account"

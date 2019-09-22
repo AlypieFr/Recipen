@@ -18,9 +18,8 @@
             ></v-img>
         </template>
 
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-        <v-toolbar-title>{{ title }}</v-toolbar-title>
+        {% block header %}
+        <v-toolbar-title><a href="/">{{ main_title }}</a></v-toolbar-title>
 
         <div class="flex-grow-1"></div>
 
@@ -45,7 +44,7 @@
                     <v-avatar left>
                         <v-img :src="avatar_src"></v-img>
                     </v-avatar>
-                    <b style="padding-left: 5px; padding-right: 5px;">{{ name }}</b>
+                    <b style="padding-left: 5px; padding-right: 5px;">(( name ))</b>
                 </v-chip>
             </template>
             <v-card width="300">
@@ -92,6 +91,7 @@
             </template>
             <span>{{ _("Login") }}</span>
         </v-tooltip>
+        {% endblock %}
     </v-app-bar>
     <v-sheet
             id="scrolling-techniques-5"
@@ -101,7 +101,7 @@
             style="background: none"
     >
         <v-container
-                style="padding-top: 117px; display: table; padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; max-width: none;"
+                class="recipen-main-container web"
                 fill-height>
             {#            <div style="width: 260px; display: table-cell; vertical-align: top; height: 100%;">#}
             <div id="loading" v-show="loadings > 0">

@@ -1,9 +1,14 @@
 {% extends "basis.html" %}
 
+{% block script %}
+    {{ super() }}
+    <script src="/static/vue/profile.js" defer></script>
+{% endblock %}
+
 {% block appbody %}
     <v-app-bar
             absolute
-            color="#CA2C0A"
+            color="#CE472B"
             dense
             {#        fade-img-on-scroll#}
             scroll-target="#scrolling-techniques-5"
@@ -16,9 +21,9 @@
             ></v-img>
         </template>
 
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon v-blur @click="showHideMenu()"></v-app-bar-nav-icon>
 
-        <v-toolbar-title>{{ title }}</v-toolbar-title>
+        <v-toolbar-title>{{ main_title }}</v-toolbar-title>
 
         <div class="flex-grow-1"></div>
 
@@ -43,7 +48,7 @@
                     <v-avatar left>
                         <v-img :src="avatar_src"></v-img>
                     </v-avatar>
-                    <b style="padding-left: 5px; padding-right: 5px;">{{ name }}</b>
+                    <b style="padding-left: 5px; padding-right: 5px;">(( name ))</b>
                 </v-chip>
             </template>
             <v-card width="300" class="card-user-menu">
@@ -56,14 +61,14 @@
                             <v-list-item-title>(( name ))</v-list-item-title>
                             <v-list-item-subtitle>(( user_role_name ))</v-list-item-subtitle>
                         </v-list-item-content>
-{#                        <v-list-item-action>#}
-{#                            <v-btn#}
-{#                                    icon#}
-{#                                    @click="menu = false"#}
-{#                            >#}
-{#                                <v-icon>mdi-close-circle</v-icon>#}
-{#                            </v-btn>#}
-{#                        </v-list-item-action>#}
+                        {#                        <v-list-item-action>#}
+                        {#                            <v-btn#}
+                        {#                                    icon#}
+                        {#                                    @click="menu = false"#}
+                        {#                            >#}
+                        {#                                <v-icon>mdi-close-circle</v-icon>#}
+                        {#                            </v-btn>#}
+                        {#                        </v-list-item-action>#}
                     </v-list-item>
                 </v-list>
                 <v-list>
@@ -91,14 +96,19 @@
             style="background: none !important;"
     >
         <v-container
-                style="padding-top: 37px; display: table; padding-left: 0; margin-left: 0; margin-right: 0; max-width: none;"
+                class="recipen-main-container panel"
                 fill-height>
-            {#            <div style="width: 260px; display: table-cell; vertical-align: top; height: 100%;">#}
+            <div id="loading" v-show="loadings > 0">
+                <div class="loader"></div>
+            </div>
+            <v-alert v-model="show_alert" :type="type_alert"
+                     style="margin-top: 15px; position: fixed; width: 100%; z-index: 10;" dismissible>
+                (( message_alert ))
+            </v-alert>
             <v-navigation-drawer
-                    :expand-on-hover="windowSize.x < 1300"
+                    :expand-on-hover="windowSize.x < 1300 && navForceOpen === null"
                     permanent
-                    {#      absolute#}
-                    style="z-index: 0; display: table-cell; vertical-align: top; height: 100%;"
+                    :class="{'recipen-navbar': true, hide: navOpen === false}"
             >
                 {#      <template v-slot:prepend>#}
                 {#        <v-list>#}
@@ -129,30 +139,25 @@
                             nav
                             dense
                     >
-                        <v-list-item link>
-                            <v-list-item-icon>
-                                <v-icon>mdi-folder</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-title>My Files</v-list-item-title>
-                        </v-list-item>
-                        <v-list-item link>
-                            <v-list-item-icon>
-                                <v-icon>mdi-account-multiple</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-title>Shared with me</v-list-item-title>
-                        </v-list-item>
-                        <v-list-item link>
-                            <v-list-item-icon>
-                                <v-icon>mdi-star</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-title>Starred</v-list-item-title>
-                        </v-list-item>
+                        {% for menu in menus %}
+                            <v-list-item link @click="setPage('{{ menu.href }}')"
+                                         :class="{'menu-selected': page === '{{ menu.href }}'}">
+                                <v-list-item-icon>
+                                    <v-icon>{{ menu.icon }}</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-title>{{ menu.label }}</v-list-item-title>
+                            </v-list-item>
+                        {% endfor %}
                     </v-list>
                 </template>
             </v-navigation-drawer>
-            <div style="display: table-cell; vertical-align: top; padding-left: 10px; padding-top: 10px;">
-                {% block bodycontent %}
-                {% endblock %}
+            <div class="recipen-main-content">
+{#                {% block bodycontent %}#}
+{#                {% endblock %}#}
+                <v-container v-if="isPage('/panel')">
+                    Home page
+                </v-container>
+                <main-profile v-else-if="isPage('/panel/profile')"></main-profile>
             </div>
         </v-container>
     </v-sheet>

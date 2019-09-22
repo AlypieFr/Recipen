@@ -1,8 +1,8 @@
 session = {};
 
-session.get = function(url, then, error_message=null, except=null, final=null) {
+session.get = function(url, data, then, error_message=null, except=null, final=null) {
     eventBus.$emit("startLoading");
-    ax = axios.get(url);
+    ax = axios.get(url, {params: data});
     ax.then(function(response) {
         then(response);
     });

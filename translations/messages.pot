@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-14 18:34+0200\n"
+"POT-Creation-Date: 2019-09-22 12:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,54 +17,74 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: app.py:68 templates/web/basis.html:48 view/panel.py:22
-msgid "Panel"
-msgstr ""
-
-#: app.py:80 templates/web/basis.html:65
-msgid "Login"
-msgstr ""
-
-#: app.py:93
+#: app.py:101
 msgid "Bad mail or password"
 msgstr ""
 
-#: app.py:99
+#: app.py:107
 msgid ""
 "Your account is not active. Please check your e-mails to confirm your "
 "account"
+msgstr ""
+
+#: functions.py:24 view/panel.py:25
+msgid "User profile"
+msgstr ""
+
+#: functions.py:26 templates/web/basis.html:76
+msgid "Panel"
+msgstr ""
+
+#: functions.py:28 templates/web/basis.html:93
+msgid "Login"
+msgstr ""
+
+#: functions.py:30 view/register.py:20
+msgid "Register"
 msgstr ""
 
 #: templates/404.html:321
 msgid "GO BACK HOME"
 msgstr ""
 
-#: templates/basis.html:51
+#: templates/basis.html:53
 msgid "Close"
 msgstr ""
 
-#: templates/panel/basis.html:47
+#: templates/panel/basis.html:79
 msgid "See website"
 msgstr ""
 
-#: templates/panel/basis.html:53 templates/web/basis.html:54
+#: templates/panel/basis.html:85 templates/web/basis.html:82
 msgid "Logout"
 msgstr ""
 
-#: view/panel.py:14
+#: view/panel.py:20
+msgid "Home"
+msgstr ""
+
+#: view/panel.py:36
 msgid "Not authenticated"
 msgstr ""
 
-#: view/panel.py:16
+#: view/panel.py:38
 msgid "Please login to continue"
 msgstr ""
 
-#: view/register.py:20
-msgid "Register"
+#: view/panel.py:56 view/register.py:28
+msgid "Missing required fields"
 msgstr ""
 
-#: view/register.py:28
-msgid "Missing required fields"
+#: view/panel.py:68
+msgid "Incorrect current password"
+msgstr ""
+
+#: view/panel.py:70
+msgid "Inactive user"
+msgstr ""
+
+#: view/panel.py:76
+msgid "User profile successfully updated"
 msgstr ""
 
 #: view/register.py:40

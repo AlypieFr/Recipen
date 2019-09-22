@@ -1,58 +1,60 @@
 {% extends "empty.html" %}
 
 {% block script %}
-{{ super() }}
-<script src="/static/js/vue.js" defer></script>
-<script src="/static/js/vuetify-v2.0.18.min.js" defer></script>
-<script src="/static/js/jquery-3.4.1.min.js" defer></script>
-<script src="/static/js/axios.min.js" defer></script>
-<script src="/static/js/translate.js" defer></script>
-{% if locales %}
-    {% for my_locale in locales %}
-    <script src="/static/js/locale/{{ my_locale }}.js" defer></script>
-    {% endfor %}
-{% endif %}
-<script src="/static/js/session.js" defer></script>
-<script src="/static/vue/main.js" defer></script>
-<script src="/static/vue/basic.js" defer></script>
+    {{ super() }}
+    <script src="/static/js/vue.js" defer></script>
+    <script src="/static/js/vuetify-v2.0.18.min.js" defer></script>
+    <script src="/static/js/jquery-3.4.1.min.js" defer></script>
+    <script src="/static/js/axios.min.js" defer></script>
+    <script src="/static/js/translate.js" defer></script>
+    {% if locales %}
+        {% for my_locale in locales %}
+            <script src="/static/js/locale/{{ my_locale }}.js" defer></script>
+        {% endfor %}
+    {% endif %}
+    <script src="/static/js/session.js" defer></script>
+    <script src="/static/js/ajax.js" defer></script>
+    <script src="/static/vue/main.js" defer></script>
+    <script src="/static/vue/basic.js" defer></script>
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
-<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/static/css/materialdesignicons.min.css">
-<link rel="stylesheet" type="text/css" href="/static/css/vuetify-v2.0.18.min.css">
-<link rel="stylesheet" type="text/css" href="/static/css/recipen.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/materialdesignicons.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/vuetify-v2.0.18.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/recipen.css">
 {% endblock %}
 
 {% block body_attr %}
-    onload="init('{{ locale }}', '{{ email_hash }}', '{{ name }}', '{{ dark }}', '{{ show_search }}', '{{ role }}');"
+    onload="init('{{ locale }}', '{{ email_hash }}', '{{ name }}', '{{ dark }}', '{{ show_search }}', '{{ role }}',
+    '{{ request.path }}');"
 {% endblock %}
 
 {% block body %}
-<div id="app">
-    <div v-cloak>
-        <v-app :dark="dark" v-resize="onResize">
-          {% block appbody %}
-          {% endblock %}
-          <div class="text-center">
-            <v-snackbar
-              v-model="snackbar"
-              :multi-line="snackbar_multiline"
-              :top="true"
-              :color="snackbar_color"
-              style="z-index: 1002"
-            >
-              (( snackbar_message ))
-              <v-btn
-                color="black"
-                text
-                @click="snackbar = false"
-              >
-                {{ _("Close") }}
-              </v-btn>
-            </v-snackbar>
-          </div>
-        </v-app>
+    <div id="app">
+        <div v-cloak>
+            <v-app :dark="dark" v-resize="onResize">
+                {% block appbody %}
+                {% endblock %}
+                <div class="text-center">
+                    <v-snackbar
+                            v-model="snackbar"
+                            :multi-line="snackbar_multiline"
+                            :top="true"
+                            :color="snackbar_color"
+                            style="z-index: 1002"
+                    >
+                        (( snackbar_message ))
+                        <v-btn
+                                color="black"
+                                text
+                                @click="snackbar = false"
+                        >
+                            {{ _("Close") }}
+                        </v-btn>
+                    </v-snackbar>
+                </div>
+            </v-app>
+        </div>
     </div>
-</div>
 {% endblock %}
